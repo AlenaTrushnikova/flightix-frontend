@@ -1,0 +1,214 @@
+
+.list-tickets .list-item {
+    margin-top: 30px;
+    background-color: #fff;
+    transition: .4s box-shadow;
+    padding: 30px 12px;
+}
+
+@media (min-width: 768px) {
+    .list-tickets .list-item {
+        text-align: left;
+        padding: 13px 30px 12px 30px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .list-tickets .list-item {
+        padding: 13px 12.2% 12px 40px;
+    }
+}
+
+.list-tickets .list-item:hover {
+    box-shadow: 0 0 13px 0 rgba(81, 98, 121, 0.18);
+}
+
+.list-tickets .list-item .divider {
+    margin-top: 14px;
+    margin-bottom: 14px;
+    background-color: #cacaca;
+}
+
+@media (max-width: 767.98px) {
+    .list-tickets .list-item .divider {
+        height: auto;
+        width: 1px;
+        margin: 0 14px;
+    }
+}
+
+.list-tickets .list-item .button {
+    margin-top: 12px;
+    /*padding: 11px 20px;*/
+    font-size: 12px;
+    letter-spacing: 0.08em;
+}
+
+.list-tickets .list-item-price {
+    margin-top: 3px;
+}
+
+@media (min-width: 768px) {
+    .list-tickets .list-item-inner {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.list-tickets .list-item-subtitle {
+    margin-top: 11px;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .list-tickets .list-item-subtitle {
+        text-align: left;
+    }
+}
+
+.list-tickets .list-item-main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .list-tickets .list-item-main {
+        display: block;
+    }
+}
+
+.list-tickets .list-item-footer {
+    margin-top: 16px;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .list-tickets .list-item-footer {
+        margin-top: 0;
+        margin-left: 7.6%;
+        /*text-align: left;*/
+    }
+}
+
+.list-tickets .list-item-top, .list-tickets .list-item-bottom {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex-basis: 50%;
+}
+
+@media (min-width: 768px) {
+    .list-tickets .list-item-top, .list-tickets .list-item-bottom {
+        flex-basis: 0;
+        flex-direction: row;
+    }
+}
+
+.list-tickets .list-item-logo {
+    margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+    .list-tickets .list-item-logo {
+        margin-bottom: 0;
+        width: 100px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .list-tickets .list-item-logo img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+.list-tickets .list-item-content {
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+}
+
+@media (min-width: 768px) {
+    .list-tickets .list-item-content {
+        display: flex;
+        margin-left: auto;
+    }
+}
+
+@media (min-width: 768px) {
+    .list-tickets .list-item-content-left {
+        text-align: right;
+    }
+}
+
+@media (min-width: 768px) {
+    .list-tickets .list-item-content-right {
+        text-align: left;
+    }
+}
+
+.list-tickets .list-item-content-line {
+    position: relative;
+    height: 1px;
+    margin: 5px 0;
+    background-color: #3e3f40;
+}
+
+.list-tickets .list-item-content-line:after {
+    position: absolute;
+    right: 0;
+    content: '';
+    top: -4px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 4px 0 4.4px 8px;
+    border-color: transparent transparent transparent #3e3f40;
+}
+
+.list-tickets .list-item-content-line-wrapper {
+    flex-basis: 260px;
+    text-align: center;
+    margin: 12px 0;
+}
+
+@media (min-width: 768px) {
+    .list-tickets .list-item-content-line-wrapper {
+        margin: 0 18px;
+    }
+}
+
+@media (min-width: 768px) {
+    .list-tickets .list-item-content-left, .list-tickets .list-item-content-right {
+        margin-top: 6px;
+        min-width: 95px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .list-tickets .list-item-content-left, .list-tickets .list-item-content-right {
+        min-width: 142px;
+    }
+}
+
+ul {
+    list-style-type: none;
+    padding: 0px;
+}
+
+.container {
+    padding: 0px;
+}
+
+.button-primary {
+    color: #fff;
+    background-color: #ef5325;
+    /*background: linear-gradient(0deg, #ad146a 0%, #c62a82 100%);*/
+}
+
+.button-primary:hover {
+    color: #fff;
+    background-color: #fa8c5b;
+
+}
