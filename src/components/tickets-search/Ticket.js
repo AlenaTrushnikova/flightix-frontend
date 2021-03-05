@@ -156,7 +156,7 @@ class Ticket extends Component {
                                     {/*{getSymbolFromCurrency(terms[Object.keys(terms)[0]]['currency'])*/}
                                     {`$ ${currencyFormatter(currencyConverter(terms[Object.keys(terms)[0]]['price'], this.props.currencyRate))}`}
                                 </h5>
-                                <a className="btn button-primary button-xs button-no-shadow" href="#">view deal</a>
+                                <a className="btn button-primary button-xs button-no-shadow" href="google.com">view deal</a>
                             </div>
                         </div>
                     </li>

@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import logo from '../assets/img/404page.gif'
-import BookingForm from "../components/booking-form/BookingForm";
-
 
 class NotFound extends Component {
     render() {

@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Ticket from "../components/tickets-search/Ticket"
 import BookingForm from "../components/booking-form/BookingForm"
 import plane from '../assets/img/404page.gif'
-import logo from "../assets/img/404page.gif";
 
 const API = "http://localhost:3001"
 

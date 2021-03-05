@@ -198,7 +198,7 @@ class BookingForm extends Component {
             <div className="form-btn form-group">
                 <button className="submit-btn"
                         name='add'
-                        onClick={() => (this.state.button = 'add')}>Add to Plans
+                        onClick={() => (this.setState({button: 'add'}))}> Add to Plans
                 </button>
             </div>
         )
@@ -209,7 +209,7 @@ class BookingForm extends Component {
             <div className="form-btn form-group">
                 <button className="submit-btn"
                         name='search'
-                        onClick={() => {this.state.button = 'search'}}>Show Flights
+                        onClick={() => (this.setState({button: 'search'}))}>Show Flights
                 </button>
             </div>
         )

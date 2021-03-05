@@ -3,7 +3,7 @@ import {Dropdown} from "react-bootstrap"
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 
-const UserMenu = () => {
+const UserMenu = ({handleLogout}) => {
     return (
 
         <Dropdown>
@@ -12,7 +12,7 @@ const UserMenu = () => {
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 <Dropdown.Item href="/">My Plans</Dropdown.Item>
-                <Dropdown.Item href="/">Log Out</Dropdown.Item>
+                <Dropdown.Item onClick={handleLogout}>Log Out</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     )
