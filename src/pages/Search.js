@@ -10,23 +10,37 @@ class Search extends Component {
     state = {
         tickets: [],
         currencyRate: 0,
-        newSearch: false,
+        loading: true,
     }
 
     componentDidMount() {
         if (this.props.location.search !== null) {
-            let urlRequest = API + `/tickets`
-            urlRequest += `${this.props.location.search}`
-            console.log(urlRequest)
-            fetch(urlRequest)
-                .then(resp => resp.json())
-                .then(data =>
-                    this.setState({
-                        tickets: data['tickets'],
-                        currencyRate: data['currency_rate']
-                    })
-                )
+            this.loadTickets()
         }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.location.search === this.props.location.search) {
+            return
+        }
+
+        this.loadTickets()
+    }
+
+    loadTickets() {
+        let urlRequest = API + `/tickets`
+        const urlParams = new URLSearchParams(this.props.location.search);
+        urlParams.set('from', urlParams.get('from').split(', ')[1])
+        urlParams.set('to', urlParams.get('to').split(', ')[1])
+        urlRequest += `?${urlParams.toString()}`
+        fetch(urlRequest)
+            .then(resp => resp.json())
+            .then(data =>
+                this.setState({
+                    tickets: data['tickets'],
+                    currencyRate: data['currency_rate']
+                })
+            )
     }
 
     render() {
@@ -34,7 +48,7 @@ class Search extends Component {
             <div className='container mt-5'>
                 <div className="row booking-form">
                     <div className="booking-form-search">
-                        <BookingForm type="search" setNewSearch={this.setNewSearch}/>
+                        <BookingForm type="search" setNewSearch={this.setNewSearch} search={this.props.location.search}/>
                     </div>
                 </div>
                 {this.state.tickets !== null
@@ -66,7 +80,6 @@ class Search extends Component {
                         <img src={plane} alt="loading..." width='400px'/>
                     </div>
                 }
-
             </div>
         )
     }

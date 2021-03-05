@@ -9,8 +9,45 @@ class BookingForm extends Component {
     state = {
         button: '',
         search: '',
-        locations: []
+        locations: [],
+        formFields: {
+            departure: "",
+            arrival: "",
+            dateOfDep: "",
+            dateOfReturn: "",
+            adults: 1,
+            infants: 0,
+            flightClass: "Economy",
+        }
     }
+
+    componentDidMount() {
+        if (this.props.search === undefined) {
+            return
+        }
+        const urlParams = new URLSearchParams(this.props.search);
+        const departure = urlParams.get('from')
+        const arrival = urlParams.get('to')
+        const dateOfDep = urlParams.get('dateOfDep')
+        const dateOfReturn = urlParams.get('dateOfReturn') !== null ? urlParams.get('dateOfReturn') : ""
+        const adults = urlParams.get('adults')
+        const infants = urlParams.get('infants')
+        const flightClass = urlParams.get('flightClass') === 'Y' ? 'Economy' : 'Business'
+
+        this.setState({
+            formFields: {
+                departure: departure,
+                arrival: arrival,
+                dateOfDep: dateOfDep,
+                dateOfReturn: dateOfReturn,
+                adults: adults,
+                infants: infants,
+                flightClass: flightClass
+            }
+        })
+    }
+
+
 
     handleForm = (e) => {
         e.preventDefault()
@@ -18,8 +55,8 @@ class BookingForm extends Component {
             console.log("Button Add clicked!");
         }
         if (this.state.button === 'search') {
-            let departure = e.target.departure.value.split(', ')[1]
-            let arrival = e.target.arrival.value.split(', ')[1]
+            let departure = e.target.departure.value
+            let arrival = e.target.arrival.value
             let dateOfDep = e.target.dateOfDep.value
             let adults = e.target.adults.value
             let infants = e.target.infants.value
@@ -70,12 +107,15 @@ class BookingForm extends Component {
             <div className="form-group">
                 <div className="form-checkbox">
                     <label htmlFor="roundtrip">
-                        <input type="radio" id="roundtrip" name="flightType"
-                               defaultChecked/>
+                        <input type="radio" id="roundtrip"
+                               name="flightType"
+                               defaultChecked={this.state.formFields.dateOfReturn !== '' || this.state.formFields.dateOfReturn === ''} />
                         <span/>Roundtrip
                     </label>
                     <label htmlFor="one-way">
-                        <input type="radio" id="one-way" name="flightType"/>
+                        <input type="radio" id="one-way"
+                               name="flightType"
+                               defaultChecked={this.state.formFields.dateOfReturn === '' && this.state.formFields.dateOfReturn !== ''}/>
                         <span/>One way
                     </label>
                 </div>
@@ -91,6 +131,7 @@ class BookingForm extends Component {
                        placeholder="City or airport"
                        name='departure'
                        list="location"
+                       defaultValue={this.state.formFields.departure}
                        onChange={this.searchLocation}
                        required
                 />
@@ -111,6 +152,7 @@ class BookingForm extends Component {
                        placeholder="City or airport"
                        name='arrival'
                        list="location"
+                       defaultValue={this.state.formFields.arrival}
                        onChange={this.searchLocation}
                        required
                 />
@@ -131,8 +173,8 @@ class BookingForm extends Component {
                 <span className="form-label">Departing</span>
                 <input className="form-control" type="date"
                        name='dateOfDep'
-                       required
-                />
+                       defaultValue={this.state.formFields.dateOfDep}
+                       required/>
             </div>
         )
     }
@@ -143,8 +185,7 @@ class BookingForm extends Component {
                 <span className="form-label">Returning</span>
                 <input className="form-control" type="date"
                        name='dateOfReturn'
-                       required
-                />
+                       defaultValue={this.state.formFields.dateOfReturn}/>
             </div>
         )
     }
@@ -153,7 +194,9 @@ class BookingForm extends Component {
         return (
             <div className="form-group">
                 <span className="form-label">Adults (18+)</span>
-                <select className="form-control" name='adults'>
+                <select className="form-control"
+                        name='adults'
+                        defaultValue={this.state.formFields.adults}>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -169,7 +212,9 @@ class BookingForm extends Component {
         return (
             <div className="form-group">
                 <span className="form-label">Infants (0-2)</span>
-                <select className="form-control" name='infants'>
+                <select className="form-control"
+                        name='infants'
+                        defaultValue={this.state.formFields.infants}>
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -184,7 +229,9 @@ class BookingForm extends Component {
         return (
             <div className="form-group">
                 <span className="form-label">Travel class</span>
-                <select className="form-control" name='class'>
+                <select className="form-control"
+                        name='class'
+                        defaultValue={this.state.formFields.flightClass}>
                     <option>Economy</option>
                     <option>Business</option>
                 </select>

@@ -153,8 +153,7 @@ class Ticket extends Component {
                             </div>
                             <div className="list-item-footer">
                                 <h5 className="text-bold list-item-price align-content-center">
-                                    {/*{getSymbolFromCurrency(terms[Object.keys(terms)[0]]['currency'])*/}
-                                    {`$ ${currencyFormatter(currencyConverter(terms[Object.keys(terms)[0]]['price'], this.props.currencyRate))}`}
+                                    <strong>{`$ ${currencyFormatter(currencyConverter(terms[Object.keys(terms)[0]]['price'], this.props.currencyRate))}`} </strong>
                                 </h5>
                                 <a className="btn button-primary button-xs button-no-shadow" href="google.com">view deal</a>
                             </div>
