@@ -18,7 +18,7 @@ function App(props) {
 
     // state
     const [user, setUser] = useState('')
-    const [token, setToken] = useState("");
+    // const [token, setToken] = useState('');
 
     //// get user on page load
     useEffect(() => {
@@ -35,10 +35,9 @@ function App(props) {
                 },
             })
                 .then(res => res.json())
-                //.then(console.log)
                 .then(data => {
-                    setUser({user: data.user})
-                    setToken(data.token)
+                    setUser(data.user)
+                    // setToken(data.token)
                 })
         }
     }
@@ -56,19 +55,18 @@ function App(props) {
                 <div className="d-flex flex-column">
                     <div className='flex-grow-1 flex-shrink-0'>
                         <Switch>
-                            <Route exact path="/" component={Home}/>
-                            <Route exact path='/search' component={Search}/>
+                            <Route exact path="/" render={() => <Home user={user}/> }/>
+                            <Route exact path='/search' render={() => <Search user={user}/> }/>
                             <Route exact path="/login" render={() => <Login setUser={setUser}/>}/>
                             <Route exact path="/signup" render={() => <SignUp setUser={setUser}/>}/>
-                            <Route path='/users' component={UserPage}/>
-                            <Route component={NotFound}/>
-                             user routes
+                            {/*<Route path='/users' component={UserPage}/>*/}
+                            {/*user routes*/}
                             {localStorage.token && (
                                 <>
-                                    <Route exact path="/profile" component={UserPage}/>
-                                    </>
+                                    <Route exact path="/profile" render={() => <UserPage user={user}/>}/>
+                                </>
                             )}
-
+                            <Route component={NotFound}/>
                         </Switch>
                     </div>
                 </div>

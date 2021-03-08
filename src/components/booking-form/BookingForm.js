@@ -48,33 +48,72 @@ class BookingForm extends Component {
     }
 
 
-
     handleForm = (e) => {
         e.preventDefault()
+        let departure = e.target.departure.value
+        let arrival = e.target.arrival.value
+        let dateOfDep = e.target.dateOfDep.value
+        let adults = e.target.adults.value
+        let infants = e.target.infants.value
+        let flightClass = e.target.class.value === 'Economy' ? 'Y' : 'C'
+
+        const params = new URLSearchParams()
+        params.set('from', departure)
+        params.set('to', arrival)
+        params.set('dateOfDep', dateOfDep)
+        params.set('adults', adults)
+        params.set('infants', infants)
+        params.set('flightClass', flightClass)
+
+        let flightType = e.target.flightType[0].checked
+        if (flightType === true) {
+            let dateOfReturn = e.target.dateOfReturn.value
+            params.set('dateOfReturn', dateOfReturn)
+        }
+
         if (this.state.button === 'add') {
-            console.log("Button Add clicked!");
+            if (!localStorage.token) {
+                alert('Please login before adding to cart');
+            } else {
+                // console.log("Button Add clicked!")
+                // console.log(this.props.user.id)
+                // console.log(departure)
+                // console.log(dateOfDep)
+                // console.log(arrival)
+                // console.log(e.target.dateOfReturn.value)
+                // console.log(adults)
+                // console.log(infants)
+                // console.log(flightClass)
+
+                alert('Plan was created');
+                fetch("http://localhost:3001/plans", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        user_id: this.props.user.id,
+                        departure: departure,
+                        date_of_departure: dateOfDep,
+                        arrival: arrival,
+                        date_of_return: e.target.dateOfReturn.value,
+                        adults: adults,
+                        infants: infants,
+                        flight_class: flightClass,
+                    }),
+                })
+                    .then((resp) => resp.json())
+                    .then((data) => {
+                        console.log("this.props.updatePlans")
+                        console.log(this.props.updatePlans)
+                        if (this.props.updatePlans !== undefined) {
+                            this.props.updatePlans(data);
+                        }
+                    })
+
+            }
         }
         if (this.state.button === 'search') {
-            let departure = e.target.departure.value
-            let arrival = e.target.arrival.value
-            let dateOfDep = e.target.dateOfDep.value
-            let adults = e.target.adults.value
-            let infants = e.target.infants.value
-            let flightClass = e.target.class.value === 'Economy' ? 'Y' : 'C'
-
-            const params = new URLSearchParams()
-            params.set('from', departure)
-            params.set('to', arrival)
-            params.set('dateOfDep', dateOfDep)
-            params.set('adults', adults)
-            params.set('infants', infants)
-            params.set('flightClass', flightClass)
-
-            let flightType = e.target.flightType[0].checked
-            if (flightType === true) {
-                let dateOfReturn = e.target.dateOfReturn.value
-                params.set('dateOfReturn', dateOfReturn)
-            }
 
             this.props.history.push('/search?' + params.toString())
         }
@@ -109,7 +148,7 @@ class BookingForm extends Component {
                     <label htmlFor="roundtrip">
                         <input type="radio" id="roundtrip"
                                name="flightType"
-                               defaultChecked={this.state.formFields.dateOfReturn !== '' || this.state.formFields.dateOfReturn === ''} />
+                               defaultChecked={this.state.formFields.dateOfReturn !== '' || this.state.formFields.dateOfReturn === ''}/>
                         <span/>Roundtrip
                     </label>
                     <label htmlFor="one-way">
@@ -352,9 +391,9 @@ class BookingForm extends Component {
 
     render() {
         let formDiv =
-            this.props.type === "search"
-                ? this.getSearchBookingForm()
-                : this.getMainBookingForm()
+            this.props.type !== "search"
+                ? this.getMainBookingForm()
+                : this.getSearchBookingForm()
 
         return (
             <form onSubmit={this.handleForm}>

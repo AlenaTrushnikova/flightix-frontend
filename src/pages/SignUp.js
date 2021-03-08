@@ -7,6 +7,7 @@ import {useHistory} from 'react-router'
 
 const SignUp = ({setUser}) => {
     const [inputs, setInputs] = useState({email: "", password: "", passwordConfirmation: ""})
+    const [errors, setErrors] = useState({errors: ''})
     const history = useHistory()
 
     const URL = "http://localhost:3001/signup"
@@ -47,11 +48,10 @@ const SignUp = ({setUser}) => {
     }
 
     function validate () {
-        let errors = {};
-
+        let errors = {}
 
         if (!inputs.email) {
-            errors["email"] = "Please enter your email Address.";
+            errors["email"] = "Please enter your email Address."
         }
 
         if (typeof inputs.email !== "undefined") {
@@ -76,7 +76,6 @@ const SignUp = ({setUser}) => {
                 errors["password"] = "Passwords don't match.";
             }
         }
-
 
         return errors;
     }

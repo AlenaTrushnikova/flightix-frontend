@@ -76,7 +76,13 @@ h2 {
 }
 
 .btn-light:hover {
-    background-color: #64aee5;
+    background-color: aliceblue;
+}
+
+.btn-light {
+    color: #212529;
+    background-color: aliceblue;
+    border-color: aliceblue;
 }
 
 .half .forgot-pass {

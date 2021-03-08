@@ -15,6 +15,10 @@ class Search extends Component {
 
     componentDidMount() {
         if (this.props.location.search !== null) {
+            console.log('componentDidMount')
+
+            console.log(this.props.location)
+
             this.loadTickets()
         }
     }
@@ -48,7 +52,7 @@ class Search extends Component {
             <div className='container mt-5'>
                 <div className="row booking-form">
                     <div className="booking-form-search">
-                        <BookingForm type="search" setNewSearch={this.setNewSearch} search={this.props.location.search}/>
+                        <BookingForm type="search" setNewSearch={this.setNewSearch} search={this.props.location.search} user={this.props.user}/>
                     </div>
                 </div>
                 {this.state.tickets !== null

@@ -24,7 +24,7 @@ class Home extends Component {
                                 <div className="col-md-7 col-md-offset-1">
                                     <div className="booking-form">
                                         <div className="booking-form-main">
-                                            <BookingForm/>
+                                            <BookingForm user={this.props.user}/>
                                         </div>
                                     </div>
                                 </div>

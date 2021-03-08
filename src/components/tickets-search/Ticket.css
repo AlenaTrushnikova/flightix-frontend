@@ -212,3 +212,7 @@ ul {
     background-color: #fa8c5b;
 
 }
+
+#delete-tickets:hover {
+    color: #e73b3b;
+}
