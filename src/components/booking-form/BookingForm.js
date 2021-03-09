@@ -9,6 +9,7 @@ class BookingForm extends Component {
     state = {
         button: '',
         search: '',
+        flightType: 'roundtrip',
         locations: [],
         formFields: {
             departure: "",
@@ -47,9 +48,9 @@ class BookingForm extends Component {
         })
     }
 
-
     handleForm = (e) => {
         e.preventDefault()
+
         let departure = e.target.departure.value
         let arrival = e.target.arrival.value
         let dateOfDep = e.target.dateOfDep.value
@@ -121,6 +122,7 @@ class BookingForm extends Component {
         this.find(input)
     }
 
+
     find = search => {
         const url = `http://autocomplete.travelpayouts.com/places2?term=${search}&locale=en&types[airport]=country`;
 
@@ -131,10 +133,11 @@ class BookingForm extends Component {
             })
     }
 
+
     getFlightTypeInput = () => {
         return (
             <div className="form-group">
-                <div className="form-checkbox">
+                <div className="form-checkbox" onChange={(e) => this.setState({flightType: e.target.id})}>
                     <label htmlFor="roundtrip">
                         <input type="radio" id="roundtrip"
                                name="flightType"
@@ -214,7 +217,8 @@ class BookingForm extends Component {
                 <span className="form-label">Returning</span>
                 <input className="form-control" type="date"
                        name='dateOfReturn'
-                       defaultValue={this.state.formFields.dateOfReturn}/>
+                       defaultValue={this.state.formFields.dateOfReturn}
+                       required/>
             </div>
         )
     }
@@ -307,9 +311,12 @@ class BookingForm extends Component {
                     <div className="col-md-2">
                         {this.getFlyingToInput()}
                     </div>
-                    <div className="col-md-3">
-                        {this.getReturningDateInput()}
-                    </div>
+                    {this.state.flightType === 'roundtrip'
+                        ? <div className="col-md-3">
+                            {this.getReturningDateInput()}
+                        </div>
+                        : <div></div>
+                    }
                 </div>
                 <div className="row">
                     <div className="col-md-2">
@@ -350,9 +357,12 @@ class BookingForm extends Component {
                     <div className="col-md-6">
                         {this.getDepartingDateInput()}
                     </div>
-                    <div className="col-md-6">
-                        {this.getReturningDateInput()}
-                    </div>
+                    {this.state.flightType === 'roundtrip'
+                        ? <div className="col-md-6">
+                            {this.getReturningDateInput()}
+                        </div>
+                        : <div></div>
+                    }
                 </div>
                 <div className="row">
                     <div className="col-md-6">

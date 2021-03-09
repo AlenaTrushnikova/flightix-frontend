@@ -8,6 +8,7 @@ import {useHistory} from 'react-router';
 
 const Login = ({setUser}) => {
     const [login, setLogin] = useState({email: "", password: ""})
+    const [errors, setErrors] = useState('')
     const history = useHistory()
 
     const URL = "http://localhost:3001/login"
@@ -18,17 +19,12 @@ const Login = ({setUser}) => {
     }
 
     const handleAuthResponse = (data) => {
-        if (data.error === "Invalid email or password, please Sign Up") {
-            alert(data.error)
-            history.push("/signup");
-        }
         if (data.id) {
             localStorage.setItem("token", data.token)
             setUser({user: data.id})
-            ////// redirect
             history.push({pathname: "/"})
         } else if (data.error) {
-            alert(data.error)
+            setErrors(data.error)
         }
     };
 
@@ -36,7 +32,6 @@ const Login = ({setUser}) => {
     //////handle login
     const handleSubmit = (e) => {
         e.preventDefault()
-
         fetch(URL, {
             method: 'POST',
             headers: {
@@ -53,9 +48,7 @@ const Login = ({setUser}) => {
                 handleAuthResponse(data);
             })
             .catch(console.log);
-
     }
-
 
     return (
         <div className="d-lg-flex half">
@@ -75,6 +68,7 @@ const Login = ({setUser}) => {
                                            placeholder="email@example.com"
                                            id="email"
                                            name="email"
+                                           required
                                            value={login.email}
                                            onChange={handleChange}
                                            autoComplete="off"/>
@@ -86,9 +80,13 @@ const Login = ({setUser}) => {
                                            placeholder="Your Password"
                                            id="password"
                                            name="password"
+                                           required
                                            value={login.password}
                                            onChange={handleChange}
                                            autoComplete="off"/>
+                                </div>
+                                <div className='mb-2' style={{color: 'red', textAlign: 'left', fontSize: '14px'}}>
+                                    <strong> {errors} </strong>
                                 </div>
 
                                 <input type="submit" value="Log In" className="btn btn-block btn-light"/>

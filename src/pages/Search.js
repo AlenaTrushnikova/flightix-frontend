@@ -52,7 +52,6 @@ class Search extends Component {
     }
 
     render() {
-        console.log(this.props.location)
         return (
             <div className='container mt-5'>
                 <div className="row booking-form">

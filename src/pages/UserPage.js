@@ -83,7 +83,7 @@ class UserPage extends Component {
                     }
                 </div>
                 <div>
-                    <button className='btn button-primary button-xs button-no-shadow'
+                    <button className='btn button-primary button-xs button-no-shadow mb-2'
                             onClick={this.handleAddNewPlan}>
                         <strong> Add a New Plan </strong>
                     </button>

@@ -7,7 +7,7 @@ import {useHistory} from 'react-router'
 
 const SignUp = ({setUser}) => {
     const [inputs, setInputs] = useState({email: "", password: "", passwordConfirmation: ""})
-    const [errors, setErrors] = useState({errors: ''})
+    const [errors, setErrors] = useState('')
     const history = useHistory()
 
     const URL = "http://localhost:3001/signup"
@@ -25,7 +25,7 @@ const SignUp = ({setUser}) => {
         e.preventDefault()
         let validateStatus = validate()
         if (Object.keys(validateStatus).length !== 0) {
-            alert(Object.values(validateStatus).join("\n"))
+            setErrors(Object.values(validateStatus))
             return
         }
         //create new user
@@ -50,28 +50,15 @@ const SignUp = ({setUser}) => {
     function validate () {
         let errors = {}
 
-        if (!inputs.email) {
-            errors["email"] = "Please enter your email Address."
-        }
-
         if (typeof inputs.email !== "undefined") {
 
             var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
             if (!pattern.test(inputs.email)) {
-                errors["email"] = "Please enter valid email address.";
+                errors["email"] = "Please enter valid email address. ";
             }
         }
 
-        if (!inputs.password) {
-            errors["password"] = "Please enter your password.";
-        }
-
-        if (!inputs.passwordConfirmation) {
-            errors["passwordConfirmation"] = "Please enter your confirm password.";
-        }
-
         if (typeof inputs.password !== "undefined" && typeof inputs.passwordConfirmation !== "undefined") {
-
             if (inputs.password !== inputs.passwordConfirmation) {
                 errors["password"] = "Passwords don't match.";
             }
@@ -79,6 +66,7 @@ const SignUp = ({setUser}) => {
 
         return errors;
     }
+
     return (
         <div className="d-lg-flex half">
             <div className="bg order-1 order-md-2" style={{backgroundImage: `url(${loginImage})`}}>
@@ -125,6 +113,9 @@ const SignUp = ({setUser}) => {
                                            value={inputs.passwordConfirmation}
                                            required
                                            autoComplete="off"/>
+                                </div>
+                                <div className='mb-2' style={{color: 'red', textAlign: 'left', fontSize: '14px'}}>
+                                    <strong> {errors} </strong>
                                 </div>
 
                                 <input type="submit" value="Sign Up" className="btn btn-block btn-light"/>
