@@ -381,7 +381,7 @@ class BookingForm extends Component {
 
     render() {
         let formDiv =
-            this.props.type !== "search"
+            this.props.location.pathname === '/'
                 ? this.getMainBookingForm()
                 : this.getSearchBookingForm()
 

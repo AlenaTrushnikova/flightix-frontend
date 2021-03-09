@@ -7,6 +7,10 @@ import {withRouter} from 'react-router-dom'
 
 class UserPage extends Component {
 
+    state = {
+        display: "none"
+    }
+
     handleDeletePlan = (planId) => {
         fetch(`http://localhost:3001/plans/${planId}`, {
             method: 'DELETE',
@@ -54,6 +58,15 @@ class UserPage extends Component {
         this.props.user.plans.push(plan)
         this.forceUpdate()
     }
+
+    handleAddNewPlan = (e) => {
+        if (this.state.display === 'none') {
+            this.setState({display: ""})
+        } else {
+            this.setState({display: "none"})
+        }
+    }
+
     render() {
         if (this.props.user.plans === undefined){
             return (
@@ -63,13 +76,19 @@ class UserPage extends Component {
         return (
             <div className='container mt-5'>
                 <div>
-                    {/*<Plan user={this.props.user.plans}/>*/}
+                    <h1>My travel plans</h1>
                     {this.props.user.plans.map(plan =>
                         <Plan key={plan.id} plan={plan} handleViewDeal={this.handleViewDeal} handleDeletePlan={this.handleDeletePlan}/>
                     )
                     }
                 </div>
-                <div className="row booking-form">
+                <div>
+                    <button className='btn button-primary button-xs button-no-shadow'
+                            onClick={this.handleAddNewPlan}>
+                        <strong> Add a New Plan </strong>
+                    </button>
+                </div>
+                <div className="row booking-form" style={{display: `${this.state.display}`}}>
                     <div className="booking-form-search m-5">
                         <BookingForm user={this.props.user} updatePlans={this.updatePlans}/>
                     </div>

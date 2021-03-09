@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 class Plan extends Component {
 
     render() {
-        const {id, departure, date_of_departure, arrival, date_of_return} = this.props.plan
+        const {id, departure, date_of_departure, arrival, date_of_return, tickets} = this.props.plan
         return (
             <div className='container pl-5 pr-5'>
                 <ul className="list-tickets pl-5 pr-5">
@@ -82,11 +82,15 @@ class Plan extends Component {
                             </div>
                             <div className="list-item-footer">
                                 <h5 className="text-bold list-item-price align-content-center">
-                                    <strong>from $100 </strong>
+                                    {tickets.length > 0
+                                        ? <strong> from ${tickets.slice(-1)[0]['price']} </strong>
+                                        : <div> Searching ...  </div>
+
+                                    }
                                 </h5>
                                 <button className="btn button-primary button-xs button-no-shadow"
                                         type="button" data-toggle="tooltip"
-                                        data-placement="top" title="view deal"
+                                        data-placement="top" title="View deal"
                                         onClick={() => this.props.handleViewDeal(this.props.plan)}
                                 >
                                     <strong>view deal</strong>
