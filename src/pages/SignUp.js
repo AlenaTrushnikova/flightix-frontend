@@ -99,7 +99,8 @@ const SignUp = ({setUser}) => {
                                            name="email"
                                            onChange={handleInputChange}
                                            value={inputs.email}
-                                           required/>
+                                           required
+                                           autoComplete="off"/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="password">Password</label>
@@ -110,7 +111,8 @@ const SignUp = ({setUser}) => {
                                            name="password"
                                            onChange={handleInputChange}
                                            value={inputs.password}
-                                           required/>
+                                           required
+                                           autoComplete="off"/>
                                 </div>
                                 <div className="form-group last mb-3">
                                     <label htmlFor="passwordConfirmation">Password</label>
@@ -121,7 +123,8 @@ const SignUp = ({setUser}) => {
                                            name="passwordConfirmation"
                                            onChange={handleInputChange}
                                            value={inputs.passwordConfirmation}
-                                           required/>
+                                           required
+                                           autoComplete="off"/>
                                 </div>
 
                                 <input type="submit" value="Sign Up" className="btn btn-block btn-light"/>

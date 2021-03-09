@@ -75,16 +75,6 @@ class BookingForm extends Component {
             if (!localStorage.token) {
                 alert('Please login before adding to cart');
             } else {
-                // console.log("Button Add clicked!")
-                // console.log(this.props.user.id)
-                // console.log(departure)
-                // console.log(dateOfDep)
-                // console.log(arrival)
-                // console.log(e.target.dateOfReturn.value)
-                // console.log(adults)
-                // console.log(infants)
-                // console.log(flightClass)
-
                 alert('Plan was created');
                 fetch("http://localhost:3001/plans", {
                     method: "POST",
@@ -94,8 +84,10 @@ class BookingForm extends Component {
                     body: JSON.stringify({
                         user_id: this.props.user.id,
                         departure: departure,
+                        IATA_from: departure.split(', ')[1],
                         date_of_departure: dateOfDep,
                         arrival: arrival,
+                        IATA_to: arrival.split(', ')[1],
                         date_of_return: e.target.dateOfReturn.value,
                         adults: adults,
                         infants: infants,
@@ -104,8 +96,6 @@ class BookingForm extends Component {
                 })
                     .then((resp) => resp.json())
                     .then((data) => {
-                        console.log("this.props.updatePlans")
-                        console.log(this.props.updatePlans)
                         if (this.props.updatePlans !== undefined) {
                             this.props.updatePlans(data);
                         }
@@ -173,7 +163,7 @@ class BookingForm extends Component {
                        defaultValue={this.state.formFields.departure}
                        onChange={this.searchLocation}
                        required
-                />
+                       autoComplete="off"/>
                 <datalist id="location">
                     {this.state.locations.map(location => (
                         <option key={location.weight}>{location.name}, {location.code}</option>
@@ -194,7 +184,7 @@ class BookingForm extends Component {
                        defaultValue={this.state.formFields.arrival}
                        onChange={this.searchLocation}
                        required
-                />
+                       autoComplete="off"/>
                 <datalist id="location">
                     {this.state.locations.map(location => (
                         <option key={location.weight}>

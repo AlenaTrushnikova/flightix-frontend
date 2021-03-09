@@ -41,7 +41,8 @@ class Plan extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                    <div>
+                                {date_of_return !== null
+                                    ? <div>
                                         <hr className="divider divider-wide"/>
                                         <div className="list-item-bottom">
                                             <div className="list-item-logo">
@@ -67,7 +68,7 @@ class Plan extends Component {
                                                 </div>
                                                 <div className="list-item-content-right">
                                                     <div className="text-bold text-base">
-                                                        {departure.split(', ')[1]}
+                                                        {departure.split(', ')[0]}
                                                     </div>
                                                     <span className="small d-block">
                                                         {departure.split(', ')[1]}
@@ -76,14 +77,20 @@ class Plan extends Component {
                                             </div>
                                         </div>
                                     </div>
+                                    : ''
+                                }
                             </div>
                             <div className="list-item-footer">
                                 <h5 className="text-bold list-item-price align-content-center">
                                     <strong>from $100 </strong>
                                 </h5>
-                                <a className="btn button-primary button-xs button-no-shadow" href="google.com">
+                                <button className="btn button-primary button-xs button-no-shadow"
+                                        type="button" data-toggle="tooltip"
+                                        data-placement="top" title="view deal"
+                                        onClick={() => this.props.handleViewDeal(this.props.plan)}
+                                >
                                     <strong>view deal</strong>
-                                </a>
+                                </button>
                                 <button className="btn btn-outline-danger button-xs rounded-1 ml-1"
                                         type="button" data-toggle="tooltip"
                                         data-placement="top" title="Delete"

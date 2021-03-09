@@ -26,7 +26,7 @@ const Login = ({setUser}) => {
             localStorage.setItem("token", data.token)
             setUser({user: data.id})
             ////// redirect
-            history.push({pathname: "/profile"})
+            history.push({pathname: "/"})
         } else if (data.error) {
             alert(data.error)
         }
@@ -76,7 +76,8 @@ const Login = ({setUser}) => {
                                            id="email"
                                            name="email"
                                            value={login.email}
-                                           onChange={handleChange}/>
+                                           onChange={handleChange}
+                                           autoComplete="off"/>
                                 </div>
                                 <div className="form-group last mb-3">
                                     <label htmlFor="password">Password</label>
@@ -86,7 +87,8 @@ const Login = ({setUser}) => {
                                            id="password"
                                            name="password"
                                            value={login.password}
-                                           onChange={handleChange}/>
+                                           onChange={handleChange}
+                                           autoComplete="off"/>
                                 </div>
 
                                 <input type="submit" value="Log In" className="btn btn-block btn-light"/>

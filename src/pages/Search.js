@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Ticket from "../components/tickets-search/Ticket"
 import BookingForm from "../components/booking-form/BookingForm"
 import plane from '../assets/img/404page.gif'
+import {withRouter} from 'react-router-dom'
+
 
 const API = "http://localhost:3001"
 
@@ -14,6 +16,8 @@ class Search extends Component {
     }
 
     componentDidMount() {
+        console.log('componentDidMount')
+        console.log(this.props.location)
         if (this.props.location.search !== null) {
             console.log('componentDidMount')
 
@@ -48,6 +52,7 @@ class Search extends Component {
     }
 
     render() {
+        console.log(this.props.location)
         return (
             <div className='container mt-5'>
                 <div className="row booking-form">
@@ -89,4 +94,4 @@ class Search extends Component {
     }
 }
 
-export default Search
+export default withRouter(Search)

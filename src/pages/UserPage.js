@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Plan from "../components/plan/Plan"
 import BookingForm from "../components/booking-form/BookingForm"
 import '../components/booking-form/BookingForm.css'
+import {withRouter} from 'react-router-dom'
 
 class UserPage extends Component {
 
@@ -23,6 +24,32 @@ class UserPage extends Component {
             })
     }
 
+    handleViewDeal = (plan) => {
+
+        let departure = plan.departure
+        let arrival = plan.arrival
+        let dateOfDep = plan.date_of_departure
+        let adults = plan.adults
+        let infants = plan.infants
+        let flightClass = plan.flight_class
+
+        const params = new URLSearchParams()
+        params.set('from', departure)
+        params.set('to', arrival)
+        params.set('dateOfDep', dateOfDep)
+        params.set('adults', adults)
+        params.set('infants', infants)
+        params.set('flightClass', flightClass)
+
+        if (plan.date_of_return !== null) {
+            let dateOfReturn = plan.date_of_return
+            params.set('dateOfReturn', dateOfReturn)
+        }
+        console.log(this.props.history)
+
+        this.props.history.push('/search?' + params.toString())
+    }
+
     updatePlans = (plan) => {
         this.props.user.plans.push(plan)
         this.forceUpdate()
@@ -38,7 +65,7 @@ class UserPage extends Component {
                 <div>
                     {/*<Plan user={this.props.user.plans}/>*/}
                     {this.props.user.plans.map(plan =>
-                        <Plan key={plan.id} plan={plan} handleDeletePlan={this.handleDeletePlan}/>
+                        <Plan key={plan.id} plan={plan} handleViewDeal={this.handleViewDeal} handleDeletePlan={this.handleDeletePlan}/>
                     )
                     }
                 </div>
@@ -53,4 +80,4 @@ class UserPage extends Component {
     }
 }
 
-export default UserPage
+export default withRouter(UserPage)
