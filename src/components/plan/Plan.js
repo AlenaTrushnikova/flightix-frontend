@@ -3,8 +3,18 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 class Plan extends Component {
 
+    formatDate = (dateStr) => {
+        let currentOffset = new Date().getTimezoneOffset() * 60;
+        let flightDate = new Date((Date.parse(dateStr) / 1000 + currentOffset) * 1000)
+        let monthDate = flightDate.toDateString().split(' ')
+        let str = monthDate[1] + ' ' + monthDate[2] + ', ' + monthDate[3]
+        return str
+    }
+
     render() {
+
         const {id, departure, date_of_departure, arrival, date_of_return, tickets} = this.props.plan
+
         return (
             <div className='container pl-5 pr-5'>
                 <ul className="list-tickets pl-5 pr-5">
@@ -13,7 +23,7 @@ class Plan extends Component {
                             <div className="list-item-main">
                                 <div className="list-item-top">
                                     <div className="list-item-logo">
-                                        {date_of_departure}
+                                        {this.formatDate(date_of_departure)}
                                     </div>
                                     <div className="list-item-content">
                                         <div className="list-item-content-left">
@@ -46,7 +56,7 @@ class Plan extends Component {
                                         <hr className="divider divider-wide"/>
                                         <div className="list-item-bottom">
                                             <div className="list-item-logo">
-                                                {date_of_return}
+                                                {this.formatDate(date_of_return)}
                                             </div>
                                             <div className="list-item-content">
                                                 <div className="list-item-content-left">

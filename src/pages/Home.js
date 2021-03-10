@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
  import BookingForm from "../components/booking-form/BookingForm"
 import video from '../assets/img/video.mp4'
+import './Home.css'
 
 // import './Home.css'
 
@@ -9,7 +10,6 @@ class Home extends Component {
         return (
             <div >
                 <div className="sectionVideo">
-                    {/*<h2>Explore the World with Flightix</h2>*/}
                     <div className="video-container">
                         <div className="color-overlay"></div>
                         <video width="100%" autoPlay loop muted>
@@ -18,8 +18,8 @@ class Home extends Component {
                     </div>
                 </div>
                 <div id="booking" className="section" >
-                    <div className="section-center">
-                        <div className="container" style={{marginTop: '150px'}}>
+                    <div className="section-center" style={{marginTop: '40px'}}>
+                        <div className="container">
                             <div className="row">
                                 <div className="col-md-7">
                                     <div className="booking-form">

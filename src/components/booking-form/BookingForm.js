@@ -28,7 +28,9 @@ class BookingForm extends Component {
             startDate: new Date(),
             endDate: new Date(),
             key: 'selection'
-        }
+        },
+        addMessage: '',
+        loginMessage: ''
     }
 
     componentDidMount() {
@@ -108,9 +110,13 @@ class BookingForm extends Component {
 
         if (this.state.button === 'add') {
             if (!localStorage.token) {
-                alert('Please login before adding to cart');
+                // alert('Please login before creating a plan')
+                this.setState({loginMessage: 'Please login before creating a plan'})
+
             } else {
-                alert('Plan was created');
+                // alert('Plan was created');
+                this.setState({addMessage: 'Plan was created'})
+
                 fetch("http://localhost:3001/plans", {
                     method: "POST",
                     headers: {
@@ -123,7 +129,9 @@ class BookingForm extends Component {
                         date_of_departure: dateOfDep,
                         arrival: arrival,
                         IATA_to: arrival.split(', ')[1],
-                        date_of_return: e.target.dateOfReturn.value,
+                        date_of_return: this.state.flightType === "roundtrip" ?
+                            this.convertDate(this.state.datePicker.endDate)
+                            : "",
                         adults: adults,
                         infants: infants,
                         flight_class: flightClass,
@@ -212,8 +220,7 @@ class BookingForm extends Component {
                        autoComplete="off"/>
                 <datalist id="location">
                     {this.state.locations.map(location => {
-                        return <option key={Math.random()}
-                                       onClick={console.log("onclick")}>
+                        return <option key={Math.random()}>
                             {location.name}, {location.code}
                         </option>
                     })}
@@ -410,6 +417,16 @@ class BookingForm extends Component {
                 <div className='row searchPage'>
                     {this.searchTicketsButton()}
                 </div>
+                {this.state.addMessage !== null
+                    ? <div style={{color: 'green', fontSize: '14px'}}> {this.state.addMessage} </div>
+                    : <div></div>
+                }
+                {this.state.loginMessage !== null
+                    ? <div style={{color: 'red', fontSize: '14px'}}>
+                        {this.state.loginMessage}
+                      </div>
+                    : <div></div>
+                }
             </div>
         )
     }
@@ -453,6 +470,14 @@ class BookingForm extends Component {
                         {this.searchTicketsButton()}
                     </div>
                 </div>
+                {this.state.addMessage !== null
+                    ? <div style={{color: 'green', fontSize: '14px'}}> {this.state.addMessage} </div>
+                    : <div></div>
+                }
+                {this.state.loginMessage !== null
+                    ? <div style={{color: 'red', fontSize: '14px'}}> {this.state.loginMessage} </div>
+                    : <div></div>
+                }
             </div>
         )
     }

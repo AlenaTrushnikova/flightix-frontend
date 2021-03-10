@@ -24,10 +24,6 @@ class Ticket extends Component {
             .then(data => window.open(`${data['url']}`))
     }
 
-    openTab = () => {
-        window.open('https://google.com/');
-    }
-
     render() {
         const {
             segment,
@@ -95,6 +91,7 @@ class Ticket extends Component {
                 return price
             }
         }
+
         function nextDay(timestamp1, timestamp2){
             let currentOffset = new Date().getTimezoneOffset() * 60;
             let date1 = new Date((timestamp1 + currentOffset) * 1000)
@@ -105,10 +102,6 @@ class Ticket extends Component {
             let month2 = date2.getMonth() + 1
             return month2 > month1 ? ' (+1)' : day2 > day1 ? ' (+1)' : ""
         }
-
-
-        console.log(nextDay(segments_time[0][0], segments_time[0][1]))
-
 
         return (
             <div className='container'>
