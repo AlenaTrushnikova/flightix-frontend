@@ -88,7 +88,7 @@ class UserPage extends Component {
                         <strong> Add a New Plan </strong>
                     </button>
                 </div>
-                <div className="row booking-form" style={{display: `${this.state.display}`}}>
+                <div className="row booking-form booking-form-user-page" style={{display: `${this.state.display}`}}>
                     <div className="booking-form-search booking-form-search-user-page m-5">
                         <BookingForm user={this.props.user} updatePlans={this.updatePlans}/>
                     </div>

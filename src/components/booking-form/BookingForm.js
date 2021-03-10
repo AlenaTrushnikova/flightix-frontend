@@ -72,7 +72,7 @@ class BookingForm extends Component {
 
     dateToTimestamp = (strDate) => {
         var datum = Date.parse(strDate);
-        return datum/1000;
+        return datum / 1000;
     }
 
     convertDate = (date) => {
@@ -139,7 +139,6 @@ class BookingForm extends Component {
             }
         }
         if (this.state.button === 'search') {
-
             this.props.history.push('/search?' + params.toString())
         }
     }
@@ -149,7 +148,7 @@ class BookingForm extends Component {
         if (input === null || input === "") {
             return
         }
-        for (var i =0; i < this.state.locations.length; i++) {
+        for (var i = 0; i < this.state.locations.length; i++) {
             var location = this.state.locations[i]
             if (input === `${location.name}, ${location.code}`) {
                 this.setState({locations: []})
@@ -213,7 +212,10 @@ class BookingForm extends Component {
                        autoComplete="off"/>
                 <datalist id="location">
                     {this.state.locations.map(location => {
-                        return <option key={Math.random()} onClick={console.log("onclick")}>{location.name}, {location.code}</option>
+                        return <option key={Math.random()}
+                                       onClick={console.log("onclick")}>
+                            {location.name}, {location.code}
+                        </option>
                     })}
                 </datalist>
             </div>
@@ -333,7 +335,14 @@ class BookingForm extends Component {
             <div className="form-btn form-group">
                 <button className="submit-btn"
                         name='search'
-                        onClick={() => (this.setState({button: 'search'}))}>Show Flights
+                        onClick={() => {
+                            this.setState({button: 'search'});
+                            if (this.props.handleLoading !== undefined) {
+                                this.props.handleLoading()
+                            }
+                        }}
+                >
+                    Show Flights
                 </button>
             </div>
         )
@@ -355,10 +364,13 @@ class BookingForm extends Component {
     calendar = () => {
         return (
             <Calendar
-                onChange={item => this.setState({datePicker: {
+                onChange={item => this.setState({
+                    datePicker: {
                         startDate: item,
                         endDate: item,
-                        key: 'selection'}})}
+                        key: 'selection'
+                    }
+                })}
                 minDate={new Date()}
                 date={this.state.datePicker.startDate}
             />

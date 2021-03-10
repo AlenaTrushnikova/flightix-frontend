@@ -52,8 +52,10 @@ function App(props) {
         <div className="App">
             <AppBar user={user} handleLogout={handleLogout}/>
             <main>
-                <div className="d-flex flex-column">
-                    <div className='flex-grow-1 flex-shrink-0'>
+                <div
+                    // className="d-flex flex-column"
+                >
+                    {/*<div className='flex-grow-1 flex-shrink-0'>*/}
                         <Switch>
                             <Route exact path="/" render={() => <Home user={user}/> }/>
                             <Route exact path='/search' render={() => <Search user={user}/> }/>
@@ -68,7 +70,7 @@ function App(props) {
                             )}
                             <Route component={NotFound}/>
                         </Switch>
-                    </div>
+                    {/*</div>*/}
                 </div>
             </main>
             <Footer/>

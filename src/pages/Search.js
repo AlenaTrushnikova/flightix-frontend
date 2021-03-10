@@ -46,20 +46,25 @@ class Search extends Component {
             )
     }
 
+    handleLoading = () => {
+        this.setState({loading: true});
+    }
+
     render() {
         return (
             <div className='container mt-5' style={{ maxWidth: '90%', marginLeft: '5%', marginRight: '5%'}}>
                 <h1>Search Results</h1>
                 <div className='row'>
-                    <div className='col-md-5 search-tab' >
+                    <div className='col-md-4 search-tab' >
                         <div className="booking-form">
                             <div className="booking-form-search">
                                 <BookingForm type="search" setNewSearch={this.setNewSearch}
-                                             search={this.props.location.search} user={this.props.user}/>
+                                             search={this.props.location.search} user={this.props.user}
+                                             handleLoading={this.handleLoading}/>
                             </div>
                         </div>
                     </div>
-                    <div className='col-md-7'>
+                    <div className='col-md-8'>
                         {this.state.loading
                             ? <div> <img src={plane} alt="loading..." width='400px'/> </div>
                             : this.state.tickets.length !== 0

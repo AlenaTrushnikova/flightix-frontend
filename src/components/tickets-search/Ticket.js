@@ -61,7 +61,7 @@ class Ticket extends Component {
             hours = hours % 12;
             hours = hours ? hours : 12; // the hour '0' should be '12'
             minutes = minutes < 10 ? '0' + minutes : minutes;
-            let strTime = hours + ':' + minutes + ' ' + ampm;
+            let strTime = hours + ':' + minutes + ampm;
             return strTime;
         }
 
@@ -95,6 +95,19 @@ class Ticket extends Component {
                 return price
             }
         }
+        function nextDay(timestamp1, timestamp2){
+            let currentOffset = new Date().getTimezoneOffset() * 60;
+            let date1 = new Date((timestamp1 + currentOffset) * 1000)
+            let day1 = date1.getDate()
+            let month1 = date1.getMonth() + 1
+            let date2 = new Date((timestamp2 + currentOffset) * 1000)
+            let day2 = date2.getDate()
+            let month2 = date2.getMonth() + 1
+            return month2 > month1 ? ' (+1)' : day2 > day1 ? ' (+1)' : ""
+        }
+
+
+        console.log(nextDay(segments_time[0][0], segments_time[0][1]))
 
 
         return (
@@ -127,7 +140,7 @@ class Ticket extends Component {
                                         </div>
                                         <div className="list-item-content-right">
                                             <div className="text-bold text-base">
-                                                {formatGMTAMPM(segments_time[0][1])}
+                                                {formatGMTAMPM(segments_time[0][1]) + nextDay(segments_time[0][0], segments_time[0][1])}
                                             </div>
                                             <span className="small d-block">
                                                 {segments_airports[0][1]}
@@ -164,7 +177,7 @@ class Ticket extends Component {
                                                 </div>
                                                 <div className="list-item-content-right">
                                                     <div className="text-bold text-base">
-                                                        {formatGMTAMPM(segments_time[1][1])}
+                                                        {formatGMTAMPM(segments_time[1][1]) + nextDay(segments_time[1][0], segments_time[1][1])}
                                                     </div>
                                                     <span className="small d-block">
                                                         {segments_airports[1][1]}

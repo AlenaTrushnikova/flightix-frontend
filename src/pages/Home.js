@@ -19,7 +19,7 @@ class Home extends Component {
                 </div>
                 <div id="booking" className="section" >
                     <div className="section-center">
-                        <div className="container" style={{marginTop: '100px'}}>
+                        <div className="container" style={{marginTop: '150px'}}>
                             <div className="row">
                                 <div className="col-md-7">
                                     <div className="booking-form">
