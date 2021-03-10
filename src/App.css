@@ -3,7 +3,7 @@
 /*body > .App*/
 .App {
   min-height:100%;
-  font-family: "Lato", sans-serif;
+  font-family: "Lato", sans-serif !important;
   text-align: center;
   background-color: #cceaf7;
   text: dark;
@@ -26,6 +26,8 @@ main {
 
 .AppBar {
   background-color: aliceblue;
+  padding-right: 60px;
+  padding-left: 60px;
 }
 
 /*.App-logo {*/
@@ -62,3 +64,14 @@ main {
 /*    transform: rotate(360deg);*/
 /*  }*/
 /*}*/
+
+.search-tab {
+  margin-top: 30px;
+}
+
+.booking-form-wrapper {
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+
+}

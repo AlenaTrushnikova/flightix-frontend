@@ -1,10 +1,32 @@
 import React, {Component} from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './Ticket.css'
+import {withRouter} from "react-router"
+const API = "http://localhost:3001"
 
 // source https://www.templatemonsterpreview.com/demo/61270.html
 
 class Ticket extends Component {
+
+    getLink = () => {
+        let urlRequest = API + `/url`
+        let search = this.props.searchId
+        let terms = this.props.ticket['terms'][Object.keys(this.props.ticket['terms'])[0]]['url']
+
+        const params = new URLSearchParams()
+        params.set('search', search)
+        params.set('terms', terms)
+
+        urlRequest += `?${params.toString()}`
+
+        fetch(urlRequest)
+            .then(resp => resp.json())
+            .then(data => window.open(`${data['url']}`))
+    }
+
+    openTab = () => {
+        window.open('https://google.com/');
+    }
 
     render() {
         const {
@@ -77,7 +99,6 @@ class Ticket extends Component {
 
         return (
             <div className='container'>
-                {console.log(this.props)}
                 <ul className="list-tickets">
                     <li className="list-item">
                         <div className="list-item-inner">
@@ -158,9 +179,10 @@ class Ticket extends Component {
                                 <h5 className="text-bold list-item-price align-content-center">
                                     <strong>{`$ ${currencyFormatter(currencyConverter(terms[Object.keys(terms)[0]]['price'], this.props.currencyRate))}`} </strong>
                                 </h5>
-                                <a className="btn button-primary button-xs button-no-shadow" href="google.com">
-                                    <strong>view deal</strong>
-                                </a>
+                                    <button className='btn button-primary button-xs button-no-shadow'
+                                            onClick={() => this.getLink()}>
+                                    <strong>view deal </strong>
+                                    </button>
                             </div>
                         </div>
                     </li>
@@ -170,4 +192,4 @@ class Ticket extends Component {
     }
 }
 
-export default Ticket
+export default withRouter(Ticket)

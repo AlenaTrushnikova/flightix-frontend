@@ -5,24 +5,18 @@ import BookingForm from "../components/booking-form/BookingForm"
 import plane from '../assets/img/404page.gif'
 import {withRouter} from 'react-router-dom'
 
-
 const API = "http://localhost:3001"
 
 class Search extends Component {
     state = {
         tickets: [],
         currencyRate: 0,
+        searchId: '',
         loading: true,
     }
 
     componentDidMount() {
-        console.log('componentDidMount')
-        console.log(this.props.location)
         if (this.props.location.search !== null) {
-            console.log('componentDidMount')
-
-            console.log(this.props.location)
-
             this.loadTickets()
         }
     }
@@ -31,7 +25,6 @@ class Search extends Component {
         if (prevProps.location.search === this.props.location.search) {
             return
         }
-
         this.loadTickets()
     }
 
@@ -46,48 +39,47 @@ class Search extends Component {
             .then(data =>
                 this.setState({
                     tickets: data['tickets'],
-                    currencyRate: data['currency_rate']
+                    currencyRate: data['currency_rate'],
+                    searchId: data['search_id'],
+                    loading: false
                 })
             )
     }
 
     render() {
         return (
-            <div className='container mt-5'>
-                <div className="row booking-form">
-                    <div className="booking-form-search">
-                        <BookingForm type="search" setNewSearch={this.setNewSearch} search={this.props.location.search} user={this.props.user}/>
+            <div className='container mt-5' style={{ maxWidth: '90%', marginLeft: '5%', marginRight: '5%'}}>
+                <h1>Search Results</h1>
+                <div className='row'>
+                    <div className='col-md-5 search-tab' >
+                        <div className="booking-form">
+                            <div className="booking-form-search">
+                                <BookingForm type="search" setNewSearch={this.setNewSearch}
+                                             search={this.props.location.search} user={this.props.user}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='col-md-7'>
+                        {this.state.loading
+                            ? <div> <img src={plane} alt="loading..." width='400px'/> </div>
+                            : this.state.tickets.length !== 0
+                                    ? <div>
+                                        {this.state.tickets.map(ticket =>
+                                            <Ticket key={ticket.sign} ticket={ticket}
+                                                    currencyRate={this.state.currencyRate}
+                                                    searchId={this.state.searchId}/>
+                                        )
+                                        }
+                                    </div>
+                                    : <div>
+                                        <h3>Sorry</h3>
+                                        <h3>no tickets found</h3>
+                                        <img src={plane} alt="loading..." width='400px'/>
+                                    </div>
+                        }
+
                     </div>
                 </div>
-                {this.state.tickets !== null
-                    ? <div className='row'>
-                        <div className='col-md-3'>
-                            <select className='btn' onChange={this.handleSort}>
-                                <option value="default">Sort Tickets</option>
-                                <optgroup label="Price" value='price'>
-                                    <option value="priceLtoH">Low to high</option>
-                                    <option value="priceHtoL">High to low</option>
-                                </optgroup>
-                                <optgroup label="Name">
-                                    <option value="nameAtoZ">A to Z</option>
-                                    <option value="nameZtoA">Z to A</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                        <div className='col-md-9'>
-                            {this.state.tickets.map(ticket =>
-                                <Ticket key={ticket.sign} ticket={ticket}
-                                        currencyRate={this.state.currencyRate}/>
-                            )
-                            }
-                        </div>
-                    </div>
-                    : <div className='container mt-5'>
-                        <h1>Sorry</h1>
-                        <h3>no tickets found</h3>
-                        <img src={plane} alt="loading..." width='400px'/>
-                    </div>
-                }
             </div>
         )
     }

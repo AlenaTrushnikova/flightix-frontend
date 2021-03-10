@@ -18,7 +18,7 @@
 .booking-form .booking-form-main {
     position: relative;
     background: #fff;
-    opacity: 0.8;
+    opacity: 0.9;
     max-width: 642px;
     width: 100%;
     margin: auto;
@@ -197,3 +197,26 @@
     font-size: 22px;
     color: #191a1e;
 }
+
+.rdrDateDisplay, .rdrDateDisplayWrapper{
+    margin: 0 !important;
+    display: none !important;
+}
+.row .searchPage{
+    margin-left: 0px;
+    margin-right: 0px;
+    display: contents;
+}
+
+.rdrCalendarWrapper, .rdrMonth {
+    width: 100% !important;
+    font-size: 14px !important;
+}
+
+.rdrDay {
+    height: 3.5em !important;
+}
+.people-class-input .form-group {
+    margin: 0;
+}
+

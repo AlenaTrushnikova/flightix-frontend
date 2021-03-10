@@ -2,6 +2,10 @@ import React, {Component} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './BookingForm.css'
 import {withRouter} from 'react-router-dom'
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import {DateRange} from 'react-date-range'
+import {Calendar} from 'react-date-range'
 
 // https://colorlib.com/etc/bforms/colorlib-booking-19/
 
@@ -19,6 +23,11 @@ class BookingForm extends Component {
             adults: 1,
             infants: 0,
             flightClass: "Economy",
+        },
+        datePicker: {
+            startDate: new Date(),
+            endDate: new Date(),
+            key: 'selection'
         }
     }
 
@@ -35,6 +44,13 @@ class BookingForm extends Component {
         const infants = urlParams.get('infants')
         const flightClass = urlParams.get('flightClass') === 'Y' ? 'Economy' : 'Business'
 
+        let currentOffset = new Date().getTimezoneOffset() * 60;
+        let startDate = new Date((this.dateToTimestamp(dateOfDep) + currentOffset) * 1000)
+        let endDate = startDate
+        if (dateOfReturn !== "") {
+            endDate = new Date((this.dateToTimestamp(dateOfReturn) + currentOffset) * 1000)
+        }
+
         this.setState({
             formFields: {
                 departure: departure,
@@ -44,8 +60,27 @@ class BookingForm extends Component {
                 adults: adults,
                 infants: infants,
                 flightClass: flightClass
-            }
+            },
+            datePicker: {
+                startDate: startDate,
+                endDate: endDate,
+                key: 'selection'
+            },
+            flightType: urlParams.get('dateOfReturn') !== null ? 'roundtrip' : 'one-way'
         })
+    }
+
+    dateToTimestamp = (strDate) => {
+        var datum = Date.parse(strDate);
+        return datum/1000;
+    }
+
+    convertDate = (date) => {
+        let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+        let month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
+        let year = date.getFullYear()
+        let strDate = year + '-' + month + '-' + day
+        return strDate
     }
 
     handleForm = (e) => {
@@ -53,7 +88,7 @@ class BookingForm extends Component {
 
         let departure = e.target.departure.value
         let arrival = e.target.arrival.value
-        let dateOfDep = e.target.dateOfDep.value
+        let dateOfDep = this.convertDate(this.state.datePicker.startDate)
         let adults = e.target.adults.value
         let infants = e.target.infants.value
         let flightClass = e.target.class.value === 'Economy' ? 'Y' : 'C'
@@ -66,9 +101,8 @@ class BookingForm extends Component {
         params.set('infants', infants)
         params.set('flightClass', flightClass)
 
-        let flightType = e.target.flightType[0].checked
-        if (flightType === true) {
-            let dateOfReturn = e.target.dateOfReturn.value
+        if (this.state.flightType === "roundtrip") {
+            let dateOfReturn = this.convertDate(this.state.datePicker.endDate)
             params.set('dateOfReturn', dateOfReturn)
         }
 
@@ -115,6 +149,13 @@ class BookingForm extends Component {
         if (input === null || input === "") {
             return
         }
+        for (var i =0; i < this.state.locations.length; i++) {
+            var location = this.state.locations[i]
+            if (input === `${location.name}, ${location.code}`) {
+                this.setState({locations: []})
+                return;
+            }
+        }
         this.setState({
             search: input
         })
@@ -141,13 +182,15 @@ class BookingForm extends Component {
                     <label htmlFor="roundtrip">
                         <input type="radio" id="roundtrip"
                                name="flightType"
-                               defaultChecked={this.state.formFields.dateOfReturn !== '' || this.state.formFields.dateOfReturn === ''}/>
+                               checked={this.state.flightType === "roundtrip"}
+                               onChange={() => console.log()}/>
                         <span/>Roundtrip
                     </label>
                     <label htmlFor="one-way">
                         <input type="radio" id="one-way"
                                name="flightType"
-                               defaultChecked={this.state.formFields.dateOfReturn === '' && this.state.formFields.dateOfReturn !== ''}/>
+                               checked={this.state.flightType === "one-way"}
+                               onChange={() => console.log()}/>
                         <span/>One way
                     </label>
                 </div>
@@ -156,6 +199,7 @@ class BookingForm extends Component {
     }
 
     getFlyingFromInput = () => {
+
         return (
             <div className="form-group">
                 <span className="form-label">Flying from</span>
@@ -168,9 +212,9 @@ class BookingForm extends Component {
                        required
                        autoComplete="off"/>
                 <datalist id="location">
-                    {this.state.locations.map(location => (
-                        <option key={location.weight}>{location.name}, {location.code}</option>
-                    ))}
+                    {this.state.locations.map(location => {
+                        return <option key={Math.random()} onClick={console.log("onclick")}>{location.name}, {location.code}</option>
+                    })}
                 </datalist>
             </div>
         )
@@ -190,7 +234,7 @@ class BookingForm extends Component {
                        autoComplete="off"/>
                 <datalist id="location">
                     {this.state.locations.map(location => (
-                        <option key={location.weight}>
+                        <option key={Math.random()}>
                             {location.name}, {location.code}
                         </option>
                     ))}
@@ -199,29 +243,29 @@ class BookingForm extends Component {
         )
     }
 
-    getDepartingDateInput = () => {
-        return (
-            <div className="form-group">
-                <span className="form-label">Departing</span>
-                <input className="form-control" type="date"
-                       name='dateOfDep'
-                       defaultValue={this.state.formFields.dateOfDep}
-                       required/>
-            </div>
-        )
-    }
+    // getDepartingDateInput = () => {
+    //     return (
+    //         <div className="form-group">
+    //             <span className="form-label">Departing</span>
+    //             <input className="form-control" type="date"
+    //                    name='dateOfDep'
+    //                    defaultValue={this.state.formFields.dateOfDep}
+    //                    required/>
+    //         </div>
+    //     )
+    // }
 
-    getReturningDateInput = () => {
-        return (
-            <div className="form-group">
-                <span className="form-label">Returning</span>
-                <input className="form-control" type="date"
-                       name='dateOfReturn'
-                       defaultValue={this.state.formFields.dateOfReturn}
-                       required/>
-            </div>
-        )
-    }
+    // getReturningDateInput = () => {
+    //     return (
+    //         <div className="form-group">
+    //             <span className="form-label">Returning</span>
+    //             <input className="form-control" type="date"
+    //                    name='dateOfReturn'
+    //                    defaultValue={this.state.formFields.dateOfReturn}
+    //                    required/>
+    //         </div>
+    //     )
+    // }
 
     getAdultsInput = () => {
         return (
@@ -295,45 +339,64 @@ class BookingForm extends Component {
         )
     }
 
+    dateRange = () => {
+        return (
+            <DateRange
+                editableDateInputs={true}
+                onChange={item => this.setState({datePicker: item.selection})}
+                moveRangeOnFirstSelection={false}
+                ranges={[this.state.datePicker]}
+                minDate={new Date()}
+                daySize={100}
+            />
+        )
+    }
+
+    calendar = () => {
+        return (
+            <Calendar
+                onChange={item => this.setState({datePicker: {
+                        startDate: item,
+                        endDate: item,
+                        key: 'selection'}})}
+                minDate={new Date()}
+                date={this.state.datePicker.startDate}
+            />
+        )
+    }
+
     getSearchBookingForm = () => {
         return (
-            <div className='container'>
-                <div className="row">
-                    <div className="col-md-2">
-                        {this.getFlightTypeInput()}
-                    </div>
-                    <div className="col-md-2">
-                        {this.getFlyingFromInput()}
-                    </div>
-                    <div className="col-md-3">
-                        {this.getDepartingDateInput()}
-                    </div>
-                    <div className="col-md-2">
-                        {this.getFlyingToInput()}
-                    </div>
+            <div>
+                <div className="row searchPage align-content-center">
+                    {this.getFlightTypeInput()}
+                </div>
+                <div className="row searchPage">
+                    {this.getFlyingFromInput()}
+                </div>
+                <div className="row searchPage">
+                    {this.getFlyingToInput()}
+                </div>
+                <div className="row searchPage">
+                    {this.getAdultsInput()}
+                </div>
+                <div className="row searchPage">
+                    {this.getInfantsInput()}
+                </div>
+                <div className="row searchPage people-class-input">
+                    {this.getFlightClassInput()}
+                </div>
+                <div className="row searchPage">
                     {this.state.flightType === 'roundtrip'
-                        ? <div className="col-md-3">
-                            {this.getReturningDateInput()}
-                        </div>
-                        : <div></div>
+                        ? <div> {this.dateRange()} </div>
+                        : <div> {this.calendar()} </div>
                     }
                 </div>
-                <div className="row">
-                    <div className="col-md-2">
-                        {this.getAdultsInput()}
-                    </div>
-                    <div className="col-md-2">
-                        {this.getInfantsInput()}
-                    </div>
-                    <div className="col-md-2">
-                        {this.getFlightClassInput()}
-                    </div>
-                    <div className="col-md-3">
-                        {this.addToPlansButton()}
-                    </div>
-                    <div className="col-md-3">
-                        {this.searchTicketsButton()}
-                    </div>
+                <div className="row searchPage">
+                    {this.addToPlansButton()}
+                </div>
+                <div className='row searchPage'>
+                    {this.searchTicketsButton()}
                 </div>
             </div>
         )
@@ -353,29 +416,22 @@ class BookingForm extends Component {
                         {this.getFlyingToInput()}
                     </div>
                 </div>
-                <div className='row'>
-                    <div className="col-md-6">
-                        {this.getDepartingDateInput()}
-                    </div>
-                    {this.state.flightType === 'roundtrip'
-                        ? <div className="col-md-6">
-                            {this.getReturningDateInput()}
-                        </div>
-                        : <div></div>
-                    }
-                </div>
-                <div className="row">
-                    <div className="col-md-6">
+                <div className="row people-class-input">
+                    <div className="col-md-4">
                         {this.getAdultsInput()}
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         {this.getInfantsInput()}
+                    </div>
+                    <div className="col-md-4 ">
+                        {this.getFlightClassInput()}
                     </div>
                 </div>
                 <div className='row'>
-                    <div className="col-md-6">
-                        {this.getFlightClassInput()}
-                    </div>
+                    {this.state.flightType === 'roundtrip'
+                        ? <div className='mx-auto booking-form-wrapper'> {this.dateRange()} </div>
+                        : <div className='mx-auto booking-form-wrapper'> {this.calendar()} </div>
+                    }
                 </div>
                 <div className='row justify-content-between'>
                     <div className="col-md-6">
@@ -391,7 +447,7 @@ class BookingForm extends Component {
 
     render() {
         let formDiv =
-            this.props.location.pathname === '/'
+            this.props.location.pathname === '/' || this.props.location.pathname === '/profile'
                 ? this.getMainBookingForm()
                 : this.getSearchBookingForm()
 
