@@ -418,11 +418,11 @@ class BookingForm extends Component {
                     {this.searchTicketsButton()}
                 </div>
                 {this.state.addMessage !== null
-                    ? <div style={{color: 'green', fontSize: '14px'}}> {this.state.addMessage} </div>
+                    ? <div style={{color: 'green', fontSize: '20px'}}> {this.state.addMessage} </div>
                     : <div></div>
                 }
                 {this.state.loginMessage !== null
-                    ? <div style={{color: 'red', fontSize: '14px'}}>
+                    ? <div style={{color: 'red', fontSize: '20px'}}>
                         {this.state.loginMessage}
                       </div>
                     : <div></div>
@@ -471,11 +471,11 @@ class BookingForm extends Component {
                     </div>
                 </div>
                 {this.state.addMessage !== null
-                    ? <div style={{color: 'green', fontSize: '14px'}}> {this.state.addMessage} </div>
+                    ? <div style={{color: 'green', fontSize: '20px'}}> {this.state.addMessage} </div>
                     : <div></div>
                 }
                 {this.state.loginMessage !== null
-                    ? <div style={{color: 'red', fontSize: '14px'}}> {this.state.loginMessage} </div>
+                    ? <div style={{color: 'red', fontSize: '20px'}}> {this.state.loginMessage} </div>
                     : <div></div>
                 }
             </div>

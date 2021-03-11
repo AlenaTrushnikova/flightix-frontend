@@ -19,18 +19,36 @@ a:hover {
 h2 {
     font-size: 20px; }
 
+.half {
+    min-height: 350px;
+}
+
 .half, .half .container > .row {
-    height: 100vh; }
+    height: calc(100vh - 60px - 76px);
+    min-height: 540px;
+}
 
 @media (max-width: 991.98px) {
     .half .bg {
-        height: 500px; } }
+        height: 350px;
+    }
+
+    .half {
+        height: 900px;
+    }
+
+    .half .container > .row {
+        height: 550px;
+    }
+}
 
 .half .contents, .half .bg {
     width: 50%; }
+
 @media (max-width: 1199.98px) {
     .half .contents, .half .bg {
         width: 100%; } }
+
 .half .contents .form-group, .half .bg .form-group {
     margin-bottom: 0;
     background-color: #ffffff;

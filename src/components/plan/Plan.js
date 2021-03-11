@@ -11,6 +11,10 @@ class Plan extends Component {
         return str
     }
 
+    currencyFormatter = (integer) => {
+        return integer.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
+
     render() {
 
         const {id, departure, date_of_departure, arrival, date_of_return, tickets} = this.props.plan
@@ -93,7 +97,7 @@ class Plan extends Component {
                             <div className="list-item-footer">
                                 <h5 className="text-bold list-item-price align-content-center">
                                     {tickets.length > 0
-                                        ? <strong> from ${tickets.slice(-1)[0]['price']} </strong>
+                                        ? <strong> from ${this.currencyFormatter(tickets.slice(-1)[0]['price'])} </strong>
                                         : <div> Searching ...  </div>
 
                                     }

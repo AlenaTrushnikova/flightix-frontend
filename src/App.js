@@ -52,26 +52,20 @@ function App(props) {
         <div className="App">
             <AppBar user={user} handleLogout={handleLogout}/>
             <main>
-                <div
-                    // className="d-flex flex-column"
-                >
-                    {/*<div className='flex-grow-1 flex-shrink-0'>*/}
-                        <Switch>
-                            <Route exact path="/" render={() => <Home user={user}/> }/>
-                            <Route exact path='/search' render={() => <Search user={user}/> }/>
-                            <Route exact path="/login" render={() => <Login setUser={setUser}/>}/>
-                            <Route exact path="/signup" render={() => <SignUp setUser={setUser}/>}/>
-                            {/*<Route path='/users' component={UserPage}/>*/}
-                            {/*user routes*/}
-                            {localStorage.token && (
-                                <>
-                                    <Route exact path="/profile" render={() => <UserPage user={user}/>}/>
-                                </>
-                            )}
-                            <Route component={NotFound}/>
-                        </Switch>
-                    {/*</div>*/}
-                </div>
+                <Switch>
+                    <Route exact path="/" render={() => <Home user={user}/>}/>
+                    <Route exact path='/search' render={() => <Search user={user}/>}/>
+                    <Route exact path="/login" render={() => <Login setUser={setUser}/>}/>
+                    <Route exact path="/signup" render={() => <SignUp setUser={setUser}/>}/>
+                    {/*<Route path='/users' component={UserPage}/>*/}
+                    {/*user routes*/}
+                    {localStorage.token && (
+                        <>
+                            <Route exact path="/profile" render={() => <UserPage user={user}/>}/>
+                        </>
+                    )}
+                    <Route component={NotFound}/>
+                </Switch>
             </main>
             <Footer/>
         </div>

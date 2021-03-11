@@ -8,18 +8,14 @@ import './Home.css'
 class Home extends Component {
     render() {
         return (
-            <div >
-                <div className="sectionVideo">
-                    <div className="video-container">
-                        <div className="color-overlay"></div>
-                        <video width="100%" autoPlay loop muted>
-                            <source src={video} type="video/mp4"></source>
-                        </video>
-                    </div>
-                </div>
-                <div id="booking" className="section" >
-                    <div className="section-center" style={{marginTop: '40px'}}>
-                        <div className="container">
+            <div className='home-container'>
+                <div className='video-container-div'>
+                    <video className='video-player' autoPlay loop muted>
+                        <source src={video} type="video/mp4"></source>
+                    </video>
+
+                    <div className='form-container'>
+                        <div className="container booking-form-container">
                             <div className="row">
                                 <div className="col-md-7">
                                     <div className="booking-form">
@@ -28,11 +24,9 @@ class Home extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-5">
-                                    <div className="booking-cta">
+                                <div className="col-md-5 booking-cta">
                                         <h1>Planning a Trip To Anywhere in The World?</h1>
                                         <p>Find the best tickets with Flightix</p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
