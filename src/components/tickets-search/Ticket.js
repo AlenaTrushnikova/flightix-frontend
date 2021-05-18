@@ -4,8 +4,6 @@ import './Ticket.css'
 import {withRouter} from "react-router"
 const API = "http://localhost:3001"
 
-// source https://www.templatemonsterpreview.com/demo/61270.html
-
 class Ticket extends Component {
     //
     // getLink = () => {
@@ -25,8 +23,14 @@ class Ticket extends Component {
     // }
 
     openInNewTab = (url) => {
-        const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
-        if (newWindow) newWindow.opener = null
+        console.log(this.props.ticket['segments_airports'])
+        console.log(this.props.ticket['segments_airports'][Object.keys(this.props.ticket['segments_airports'])[0]]['0'])
+        console.log(this.props.ticket['segments_airports'][Object.keys(this.props.ticket['segments_airports'])[0]]['1'])
+        const airports = this.props.ticket['segments_airports'][Object.keys(this.props.ticket['segments_airports'])[0]]
+        const dep = airports['0']
+        const arr = airports['1']
+        // const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+        // if (newWindow) newWindow.opener = null
     }
 
     render() {
