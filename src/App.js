@@ -18,8 +18,6 @@ function App(props) {
 
     // state
     const [user, setUser] = useState('')
-    // const [token, setToken] = useState('');
-
     //// get user on page load
     useEffect(() => {
         fetchUser()
@@ -57,12 +55,8 @@ function App(props) {
                     <Route exact path='/search' render={() => <Search user={user}/>}/>
                     <Route exact path="/login" render={() => <Login setUser={setUser}/>}/>
                     <Route exact path="/signup" render={() => <SignUp setUser={setUser}/>}/>
-                    {/*<Route path='/users' component={UserPage}/>*/}
-                    {/*user routes*/}
                     {localStorage.token && (
-                        <>
                             <Route exact path="/profile" render={() => <UserPage user={user}/>}/>
-                        </>
                     )}
                     <Route component={NotFound}/>
                 </Switch>
