@@ -3,8 +3,6 @@ import React, {Component} from 'react'
 import video from '../assets/img/video.mp4'
 import './Home.css'
 
-// import './Home.css'
-
 class Home extends Component {
     render() {
         return (

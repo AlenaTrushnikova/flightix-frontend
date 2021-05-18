@@ -252,30 +252,6 @@ class BookingForm extends Component {
         )
     }
 
-    // getDepartingDateInput = () => {
-    //     return (
-    //         <div className="form-group">
-    //             <span className="form-label">Departing</span>
-    //             <input className="form-control" type="date"
-    //                    name='dateOfDep'
-    //                    defaultValue={this.state.formFields.dateOfDep}
-    //                    required/>
-    //         </div>
-    //     )
-    // }
-
-    // getReturningDateInput = () => {
-    //     return (
-    //         <div className="form-group">
-    //             <span className="form-label">Returning</span>
-    //             <input className="form-control" type="date"
-    //                    name='dateOfReturn'
-    //                    defaultValue={this.state.formFields.dateOfReturn}
-    //                    required/>
-    //         </div>
-    //     )
-    // }
-
     getAdultsInput = () => {
         return (
             <div className="form-group">
