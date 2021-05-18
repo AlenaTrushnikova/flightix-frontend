@@ -7,21 +7,26 @@ const API = "http://localhost:3001"
 // source https://www.templatemonsterpreview.com/demo/61270.html
 
 class Ticket extends Component {
+    //
+    // getLink = () => {
+    //     let urlRequest = API + `/url`
+    //     let search = this.props.searchId
+    //     let terms = this.props.ticket['terms'][Object.keys(this.props.ticket['terms'])[0]]['url']
+    //
+    //     const params = new URLSearchParams()
+    //     params.set('search', search)
+    //     params.set('terms', terms)
+    //
+    //     urlRequest += `?${params.toString()}`
+    //
+    //     fetch(urlRequest)
+    //         .then(resp => resp.json())
+    //         .then(data => window.open(`${data['url']}`))
+    // }
 
-    getLink = () => {
-        let urlRequest = API + `/url`
-        let search = this.props.searchId
-        let terms = this.props.ticket['terms'][Object.keys(this.props.ticket['terms'])[0]]['url']
-
-        const params = new URLSearchParams()
-        params.set('search', search)
-        params.set('terms', terms)
-
-        urlRequest += `?${params.toString()}`
-
-        fetch(urlRequest)
-            .then(resp => resp.json())
-            .then(data => window.open(`${data['url']}`))
+    openInNewTab = (url) => {
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+        if (newWindow) newWindow.opener = null
     }
 
     render() {
@@ -186,7 +191,7 @@ class Ticket extends Component {
                                     <strong>{`$ ${currencyFormatter(currencyConverter(terms[Object.keys(terms)[0]]['price'], this.props.currencyRate))}`} </strong>
                                 </h5>
                                     <button className='btn button-primary button-xs button-no-shadow'
-                                            onClick={() => this.getLink()}>
+                                            onClick={() => this.openInNewTab('https://aviasales.com')}>
                                     <strong>view deal </strong>
                                     </button>
                             </div>
