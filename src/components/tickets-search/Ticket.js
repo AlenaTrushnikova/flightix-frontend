@@ -5,32 +5,10 @@ import {withRouter} from "react-router"
 const API = "http://localhost:3001"
 
 class Ticket extends Component {
-    //
-    // getLink = () => {
-    //     let urlRequest = API + `/url`
-    //     let search = this.props.searchId
-    //     let terms = this.props.ticket['terms'][Object.keys(this.props.ticket['terms'])[0]]['url']
-    //
-    //     const params = new URLSearchParams()
-    //     params.set('search', search)
-    //     params.set('terms', terms)
-    //
-    //     urlRequest += `?${params.toString()}`
-    //
-    //     fetch(urlRequest)
-    //         .then(resp => resp.json())
-    //         .then(data => window.open(`${data['url']}`))
-    // }
 
     openInNewTab = (url) => {
-        console.log(this.props.ticket['segments_airports'])
-        console.log(this.props.ticket['segments_airports'][Object.keys(this.props.ticket['segments_airports'])[0]]['0'])
-        console.log(this.props.ticket['segments_airports'][Object.keys(this.props.ticket['segments_airports'])[0]]['1'])
-        const airports = this.props.ticket['segments_airports'][Object.keys(this.props.ticket['segments_airports'])[0]]
-        const dep = airports['0']
-        const arr = airports['1']
-        // const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
-        // if (newWindow) newWindow.opener = null
+        const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+        if (newWindow) newWindow.opener = null
     }
 
     render() {
